@@ -7,8 +7,11 @@ string status::getStatus(string status_code) {
 	if (strcmp(status_code.c_str(), "server_ok") == 0) {
 		return "HTTP/1.1 200\n";
 	}
-	if (strcmp(status_code.c_str(), "not_found") == 0) {
+	else if (strcmp(status_code.c_str(), "not_found") == 0) {
 		return "HTTP/1.1 400\n";
+	}
+	else if (strcmp(status_code.c_str(), "forbidden") == 0) {
+		return "HTTP/1.1 403\n";
 	}
 	return NULL;
 }
