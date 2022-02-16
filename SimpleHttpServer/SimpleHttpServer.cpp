@@ -112,7 +112,7 @@ public:
 
         long len = recv(conn, buffer_pool, sizeof(buffer_pool), 0); // It should use "long" type maybe data or address is too long.
 
-        string header = status::getStatus("server_ok") + status::getDate() + status::getServer("test") + status::getFileType("html") + "\r\n";
+        string header = status::getHeader("server_ok", "test", "html");
         //string custom_browser_address = inet_ntoa(client_addr.sin_addr);
         ifstream fin("./ServerDocuments/index.html");
         if (!fin.is_open()) {
