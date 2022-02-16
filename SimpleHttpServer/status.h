@@ -8,5 +8,6 @@ public:
 	static string getServer(string server_type);
 	static string getDate();
 	static string getFileType(string file_type);
+	static string getHeader(string status_code, string server_type, string file_type);
 };
 // Access control next
