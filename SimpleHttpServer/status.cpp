@@ -24,7 +24,7 @@ string status::getDate() {
 	time_t serverDate = time(0);
 	tm* getDate = gmtime(&serverDate);
 	char* getDateChar = asctime(getDate);
-	return "Date: " + string(getDateChar) + "\n";
+	return "Date: " + string(getDateChar);
 }
 
 string status::getFileType(string file_type) {
