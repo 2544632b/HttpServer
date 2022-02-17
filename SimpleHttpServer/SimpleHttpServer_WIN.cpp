@@ -1,6 +1,7 @@
-﻿#include <iostream>
+#include <iostream>
 #include <thread>
 #include <fstream>
+#include <mutex>
 #include <string.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
