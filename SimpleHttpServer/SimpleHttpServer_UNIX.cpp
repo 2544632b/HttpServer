@@ -75,7 +75,7 @@ public:
         if(this->enable_ssl == true) {
             SSL_CTX_free(ctx);
         }
-        close(this->socket_server_f); // Object calling finish, close the server socket.
+        close(this->socket_server_f);
         
     }
     
@@ -120,7 +120,7 @@ public:
         }
         
         if(this->enable_ssl == true) {
-            long ssl_len = SSL_read(ssl, buffer_pool, sizeof(buffer_pool)); // It should use "long" type maybe data or address is too long.
+            long ssl_len = SSL_read(ssl, buffer_pool, sizeof(buffer_pool));
             cout << buffer_pool << endl;
             if(ssl_len > 0) {
                 SSL_write(ssl, header.c_str(), header.size());
@@ -129,7 +129,7 @@ public:
         }
         
         if(this->enable_ssl == false) {
-            long len = recv(conn, buffer_pool, sizeof(buffer_pool), 0); // It should use "long" type maybe data or address is too long.
+            long len = recv(conn, buffer_pool, sizeof(buffer_pool), 0);
             if(len > 0) {
                 cout << buffer_pool << endl;
                 send(conn, header.c_str(), header.size(), 0);
