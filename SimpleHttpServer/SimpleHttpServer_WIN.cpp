@@ -84,7 +84,7 @@ public:
         if (this->enable_ssl == true) {
             SSL_CTX_free(ctx);
         }
-        closesocket(socket_server_f); //Object calling finish, close the server socket.
+        closesocket(socket_server_f);
         WSACleanup();
     }
 
@@ -111,7 +111,7 @@ public:
             SSL_accept(this->ssl);
         }
 
-        long len = recv(conn, buffer_pool, sizeof(buffer_pool), 0); // It should use "long" type maybe data or address is too long.
+        long len = recv(conn, buffer_pool, sizeof(buffer_pool), 0);
 
         string header = status::getHeader("server_ok", "test", "html");
         //string custom_browser_address = inet_ntoa(client_addr.sin_addr);
