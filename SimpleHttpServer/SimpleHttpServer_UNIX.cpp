@@ -106,25 +106,18 @@ public:
         memset(buffer_pool, NULL, sizeof(buffer_pool));
         
         /*string address = inet_ntoa(client_addr.sin_addr);*/
-        string header = status::getHeader("server_ok", "test", "html");
-        
-        char file_buffer[7162];
-        memset(file_buffer, NULL, sizeof(file_buffer));
-        ifstream fin("./ServerDocuments/index.html", ios::binary);
-        if(!fin.is_open()) {
-            cout << "Error reading file" << endl;
-        }
-        
-        while(!fin.eof()) {
-            fin.read(file_buffer, sizeof(file_buffer));
-        }
+        status status;
+        string header = status.getHeader("server_ok", "test", "html", 999);
+
+        document document;
+        document.readFile("ServerDocuments/index.html");
         
         if(this->enable_ssl == true) {
             long ssl_len = SSL_read(ssl, buffer_pool, sizeof(buffer_pool));
             cout << buffer_pool << endl;
             if(ssl_len > 0) {
                 SSL_write(ssl, header.c_str(), header.size());
-                SSL_write(ssl, file_buffer, sizeof(file_buffer));
+                SSL_write(ssl, document.file_buffer, 999);
             }
         }
         
@@ -133,7 +126,7 @@ public:
             if(len > 0) {
                 cout << buffer_pool << endl;
                 send(conn, header.c_str(), header.size(), 0);
-                send(conn, file_buffer, sizeof(file_buffer), 0);
+                send(conn, document.file_buffer, 999, 0);
             }
         }
         

@@ -28,7 +28,7 @@ private:
 
     SOCKET socket_server_f;
 
-    char buffer_pool[1024];
+    char buffer_pool[4096];
     SOCKADDR_IN client_addr;
     int length = sizeof(SOCKADDR);
 
@@ -113,23 +113,19 @@ public:
 
         long len = recv(conn, buffer_pool, sizeof(buffer_pool), 0);
 
-        string header = status::getHeader("server_ok", "test", "html");
         //string custom_browser_address = inet_ntoa(client_addr.sin_addr);
-        ifstream fin("./ServerDocuments/index.html");
-        if (!fin.is_open()) {
-            cerr << "Can not open the file" << endl;
-        }
-        char file_buffer[1000]; // File chars + 1
-        while (!fin.eof()) {
-            fin.read(file_buffer, sizeof(file_buffer));
-        }
+        status status;
+        string header = status.getHeader("server_ok", "test", "html", 999);
+
+        document document;
+        document.readFile("ServerDocuments/index.html");
 
         if (this->enable_ssl == true) {
             int ssl_len = SSL_read(this->ssl, buffer_pool, sizeof(buffer_pool));
 
             if (ssl_len > 0) {
                 SSL_write(this->ssl, header.c_str(), header.size());
-                SSL_write(this->ssl, file_buffer, sizeof(file_buffer) - 1);
+                SSL_write(this->ssl, document.file_buffer, 999);
             }
         }
 
@@ -137,7 +133,7 @@ public:
             if (len > 0) {
                 // Safari need send for a section(actually just strictly head rule).
                 send(conn, header.c_str(), header.size(), 0);
-                send(conn, file_buffer, sizeof(file_buffer) - 1, 0);
+                send(conn, document.file_buffer, 999, 0);
             }
         }
 

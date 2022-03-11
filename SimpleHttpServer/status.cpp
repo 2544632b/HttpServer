@@ -40,7 +40,15 @@ string status::getFileType(string file_type) {
 	return NULL;
 }
 
-string status::getHeader(string status_code, string server_type, string file_type) {
-    string status = status::getStatus(status_code)+status::getDate()+status::getServer(server_type)+status::getFileType(file_type)+"\r\n";
+string status::getHeader(string status_code,
+                         string server_type,
+                         string file_type,
+                         long length) {
+    string status = status::getStatus(status_code)
+    +status::getDate()
+    +status::getServer(server_type)
+    +status::getFileType(file_type)
+    +status::getHttpLength(length)
+    +"\r\n";
     return status;
 }
