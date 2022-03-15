@@ -111,6 +111,7 @@ public:
             SSL_accept(this->ssl);
         }
 
+        memset(buffer_pool, NULL, sizeof(buffer_pool));
         long len = recv(conn, buffer_pool, sizeof(buffer_pool), 0);
 
         //string custom_browser_address = inet_ntoa(client_addr.sin_addr);
