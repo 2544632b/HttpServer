@@ -67,17 +67,7 @@ public:
         server_socketaddr.sin_family = AF_INET;
         server_socketaddr.sin_addr.S_un.S_addr = inet_addr(addr);
         server_socketaddr.sin_port = htons(port);
-        try {
-            if (bind(this->socket_server_f, (SOCKADDR*)&server_socketaddr, sizeof(SOCKADDR)) == SOCKET_ERROR) {
-                throw bind(this->socket_server_f, (SOCKADDR*)&server_socketaddr, sizeof(SOCKADDR));
-            }
-        }
-        catch (int &e) {
-            cout << "Failed to bind the http server, ";
-            cerr << e << endl;
-            cout << "The server is already on this port?" << endl;
-            exit(-1);
-        }
+        bind(this->socket_server_f, (SOCKADDR*)&server_socketaddr, sizeof(SOCKADDR));
     }
 
     ~HttpServer() {
@@ -89,16 +79,9 @@ public:
     }
 
     bool create_listen(int queues) {
-        try {
-            cout << "Server is listening on " << (string)addr << ":" << port << endl;
-            listen(this->socket_server_f, queues);
-            return true;
-        }
-        catch (exception& e) {
-            cout << "An error while creating listener, ";
-            cerr << e.what() << endl;
-            return false;
-        }
+        cout << "Server is listening on " << (string)addr << ":" << port << endl;
+        listen(this->socket_server_f, queues);
+        return true;
     }
 
     bool content_back() {
