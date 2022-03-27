@@ -72,6 +72,7 @@ public:
     bool create_listen(int queues) {
         cout << "Server is listening on " << (string)addr << ":" << port << endl;
         listen(this->socket_server_f, queues);
+        return true;
     }
     
     bool content_back() {
